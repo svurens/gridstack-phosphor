@@ -6,46 +6,42 @@
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jupyter/spreadsheet.git"
+    "url": "https://github.com/svurens/gridstack-phosphor.gittsc -"
   },
   "scripts": {
     "postinstall": "npm run build",
     "build": "npm run build:ts && npm run build:es5 && npm run build:browser",
-    "build:ts": "gulp",
+    "build:ts": "tsc --project ./",
     "build:es5": "babel testsrc.js --out-file test2.js",
-    "build:browser": "browserify test2.js --outfile test1.js --debug"
+    "build:browser": "browserify -g browserify-css test2.js --outfile test1.js --debug"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-less": "^3.0.3",
-    "gulp-minify-css": "^1.1.6",
-    "gulp-typescript": "^2.8.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-util": "3.0.6",
-    "gridstack": "^0.2.3",
-    "less": "~2",
-    "lodash": "^3.10.1",
-    "source-map": "^0.4.2",
-    "typescript": "^1.5.3",
-    "phosphor-widget": "^0.9.0",
-    "phosphor-arrays": "^1.0.0",
-    "phosphor-disposable": "^1.0.0",
-    "phosphor-boxengine": "^0.9.0",
-    "phosphor-messaging": "^1.0.0",
-    "phosphor-nodewrapper": "^1.0.0",
-    "phosphor-properties": "^1.0.0",
-    "phosphor-queue": "^1.0.0",
-    "phosphor-signaling": "^1.0.0",
-    "phosphor-splitpanel": "^0.9.1",
-    "typescript": "^1.5.3",
     "babel": "^5.8.20",
-    "browserify": "^11.0.1",
     "bootstrap": "3.3.5",
-    "jquery": "2.1.4"
+    "browserify": "^11.0.1",
+    "browserify-css": "^0.7.1",
+    "gridstack": "^0.2.3",
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.8.2",
+    "gulp-util": "3.0.6",
+    "jquery": "2.1.4",
+    "lodash": "^3.10.1",
+    "phosphor-arrays": "^1.0.3",
+    "phosphor-boxengine": "^0.9.2",
+    "phosphor-disposable": "^1.0.2",
+    "phosphor-domutil": "^0.9.2",
+    "phosphor-messaging": "^1.0.3",
+    "phosphor-nodewrapper": "^1.0.2",
+    "phosphor-properties": "^1.1.0",
+    "phosphor-queue": "^1.0.2",
+    "phosphor-signaling": "^1.1.0",
+    "phosphor-splitpanel": "^0.9.1",
+    "phosphor-widget": "^0.9.5",
+    "source-map": "^0.4.2",
+    "typescript": "^1.6.0-beta"
   },
   "bugs": {
-    "url": "https://github.com/jupyter/spreadsheet/issues"
+    "url": "https://github.com/svurens/gridstack-phosphor/issues"
   },
   "main": "test1.js"
 }

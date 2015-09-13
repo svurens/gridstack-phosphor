@@ -6,8 +6,9 @@
 	    "noEmitOnError": true,
 	    "sourceMap": true,
 	    "module": "commonjs",
+	    "moduleResolution": "node",
 	    "target": "ES5",
 	    "outDir": "."
 	},
-	"files": ["test1.ts"]
+	"files": ["testsrc.ts"]
 }

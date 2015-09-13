@@ -7,10 +7,15 @@ var gulp  = require('gulp'),
 // create a default task and just log a message
 gulp.task('default', function() {
   var project = typescript.createProject({
-      declarationFiles: false,
-      noImplicitAny: true,
-      module: "commonjs",
-      target: 'ES5',
+    "experimentalDecorators": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES5",
+    "outDir": "."    
     });
 
     var sources = [
