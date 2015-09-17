@@ -19,6 +19,12 @@ body {
   right: 0;
   bottom: 0;
 }
+
+.centered-text {
+	text-align: center;
+}
+
+}
 .content {
   min-width: 100px;
   min-height: 100px;
@@ -39,4 +45,8 @@ body {
 .split-panel {
 	width: 500px;
 	height: 300px;
+}
+
+google-map {
+	height: 100%;
 }

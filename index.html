@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="test.css"/>
   <head>
     <link rel="import" href="polymer-components.html">
+    <link rel="import" href="google-map/google-map.html">
     <title>Phosphor Test</title>
       <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -20,7 +21,49 @@
     </head>
   <body>
     <div id="main"></div>
-                
+    
+
+
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active centered-text">
+      Bootstrap
+    </div>
+
+    <div class="item centered-text">
+      Carousel
+    </div>
+
+    <div class="item centered-text">
+      Example
+    </div>
+
+    <div class="item centered-text">
+      Widget
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+  <google-map id="map" latitude="37.77493" longitude="-122.41942"></google-map>
   </body>
     <script src="test1.js"></script>
 </html>

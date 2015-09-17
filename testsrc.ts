@@ -178,13 +178,15 @@ function createTestSplit(): Widget {
 	var w1 = new Widget();
 	w1.addClass("red");
 	w1.addClass("sized");
-	w1.node.innerHTML = "HELLO WORLD";
+	w1.node.innerHTML = "Phosphor";
 	var w2 = new Widget();
 	w2.addClass("blue");
 	w2.addClass("sized");
+	w2.node.innerHTML = "Splitpanel";
 	var w3 = new Widget();
 	w3.addClass("green");
 	w3.addClass("sized");
+	w3.node.innerHTML = "Example";
 	var sp = new SplitPanel();
 	sp.orientation = SplitPanel.Horizontal;
 	sp.handleSize = 5;
@@ -222,29 +224,41 @@ var options = {
 	float: true
 };
 
-
-var w1 = createContent('red');
-var w2 = createContent('green');
+//var w1 = createContent('red');
+var w2 = createTestSplit();
 var w3 = createContent('blue');
-var w4 = createContent('yellow');
-var w5 = createTestSplit();
+w3.node.appendChild(document.getElementById('myCarousel'));
 
-GridPanel.setRow(<Widget>w1, 0);
-GridPanel.setColumn(w1, 0);
+var w4 = new Widget();
+var div = document.createElement("div");
+var bootstrapButton = document.createElement("button");
+div.appendChild(bootstrapButton);
+bootstrapButton.classList.add("btn");
+bootstrapButton.classList.add("btn-primary");
+bootstrapButton.innerHTML = "Bootstrap Button";
+w4.node.appendChild(div);
+
+var w5 = new Widget();
+w5.node.appendChild(document.getElementById('map'));
+
+// GridPanel.setRow(<Widget>w1, 0);
+// GridPanel.setColumn(w1, 0);
 
 GridPanel.setRow(w2, 0);
-GridPanel.setColumn(w2, 1);
+GridPanel.setColumn(w2, 0);
+GridPanel.setColumnSpan(w2, 2);
 
 GridPanel.setRow(w3, 0);
 GridPanel.setColumn(w3, 2);
+GridPanel.setRowSpan(w3, 3);
 
-GridPanel.setRow(w4, 0);
-GridPanel.setColumn(w4, 3);
+GridPanel.setRow(w4, 4);
+GridPanel.setColumn(w4, 0);
 
 GridPanel.setRow(w5, 1);
 GridPanel.setColumn(w5, 0);
 GridPanel.setRowSpan(w5, 2);
-GridPanel.setColumnSpan(w5, 3);
+GridPanel.setColumnSpan(w5, 2);
 
 
 // var gs = new GridStackContainer(options);
@@ -253,7 +267,21 @@ GridPanel.setColumnSpan(w5, 3);
 
 var panel = new GridPanel();
 
-panel.children = [w1, w2, w3, w4, w5];
+//panel.children = [w1, w2, w3, w4, w5];
+panel.children = [w2, w3, w4, w5];
+
+panel.rowSpecs = [
+    new Spec({ minSize: 50 }),
+    new Spec({ minSize: 300 }),
+    new Spec({ minSize: 300 }),
+    new Spec({ minSize: 50 }),
+];
+
+panel.columnSpecs = [
+    new Spec({ minSize: 50 }),
+    new Spec({ minSize: 50 }),
+    new Spec({ minSize: 50 }),
+];
 
 attachWidget(panel, document.body);
 
