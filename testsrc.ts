@@ -1,13 +1,16 @@
 /// <reference path="jquery.d.ts" />
+/// <reference path="jqueryui.d.ts" />
 /// <reference path="jquery.gridstack.d.ts" />
+/// <reference path="underscore.d.ts" />
 import { ChildMessage, MSG_AFTER_ATTACH, MSG_BEFORE_DETACH, MSG_LAYOUT_REQUEST,
 ResizeMessage, Widget, attachWidget, detachWidget } from 'phosphor-widget';
 import { SplitPanel } from 'phosphor-splitpanel';
 import { Message, postMessage, sendMessage } from 'phosphor-messaging';
+import { GridPanel, Spec } from 'phosphor-gridpanel';
 declare function require(name: string): void; //there's probably a better way for this
 require('bootstrap');
 require('lodash');
-
+require('underscore');
 // //create basic gridstack
 // $(function() {
 // var options = {
@@ -15,6 +18,7 @@ require('lodash');
 // };
 // 	$('.grid-stack').gridstack(options);
 // });
+
 
 
 //polymer widget
@@ -29,13 +33,17 @@ class PolyWidget extends Widget {
 
 //widget containing a gridstack item
 
+
+
 class GridStackContainer extends Widget {
 	public wrappers: GridstackItemWrapper[];
+	public gridstack: any;
 	constructor(options: any) {
 		super();
 		this.wrappers = [];
 		this.addClass("grid-stack");
-		$(this.node).gridstack(options)
+		$(this.node).gridstack(options);
+		this.gridstack = $(this.node).data("gridstack");
 	}
 
 	protected onChildAdded(msg: ChildMessage): void {
@@ -46,7 +54,7 @@ class GridStackContainer extends Widget {
 			height: 1 + 3 * Math.random()
 		};
 
-		var wrapper = new GridstackItemWrapper(node.x, node.y, node.width, node.height);
+		var wrapper = new GridstackItemWrapper(node.x, node.y, node.width, node.height, this);
 		this.wrappers.push(wrapper);
 		msg.child.addClass("grid-stack-item-content");
 		wrapper.item.appendChild(msg.child.node);
@@ -55,6 +63,9 @@ class GridStackContainer extends Widget {
 		console.log(msg.currentIndex + 1)
 		var next = this.childAt(msg.currentIndex + 1);
 		this.node.insertBefore(wrapper.item, next && next.node);
+
+		var jwrapper = $(wrapper.item);
+		console.log(jwrapper);
 		if (this.isAttached) sendMessage(msg.child, MSG_AFTER_ATTACH);
 	}
 
@@ -66,13 +77,15 @@ class GridStackContainer extends Widget {
 //wraps a gridstack item,
 class GridstackItemWrapper {
 	public item: HTMLElement;
-	constructor(x: number, y: number, width: number, height: number) {
+	public container: GridStackContainer;
+	constructor(x: number, y: number, width: number, height: number, container: GridStackContainer) {
 		this.item = document.createElement("div");
 		this.item.classList.add("grid-stack-item");
 		this.item.setAttribute("data-gs-x", x.toString());
 		this.item.setAttribute("data-gs-y", y.toString());
 		this.item.setAttribute("data-gs-width", width.toString());
 		this.item.setAttribute("data-gs-height", height.toString());
+		this.container = container;
 	}
 }
 
@@ -179,6 +192,13 @@ function createTestSplit(): Widget {
 	return sp;
 }
 
+function createContent(name: string): Widget {
+	var widget = new Widget();
+	widget.addClass('content');
+	widget.addClass(name);
+	return widget;
+}
+
 function createGridstackWidget(gs: GridStackContainer) {
 	var node = {
 		x: 12 * Math.random(),
@@ -201,17 +221,49 @@ mainDiv.append(button);
 var options = {
 	float: true
 };
-var gs = new GridStackContainer(options);
-attachWidget(gs, document.getElementById("main"));
 
-document.getElementById("newElement").onclick = function() {
-	//createGridstackWidget(gs);
-	var testWidget = new Widget();
-	var testDiv = document.createElement("div");
-	testDiv.innerHTML = "lorem ipsum";
-	testWidget.node.appendChild(testDiv);
-	gs.addChild(testWidget);
-};
+
+var w1 = createContent('red');
+var w2 = createContent('green');
+var w3 = createContent('blue');
+var w4 = createContent('yellow');
+var w5 = createTestSplit();
+
+GridPanel.setRow(<Widget>w1, 0);
+GridPanel.setColumn(w1, 0);
+
+GridPanel.setRow(w2, 0);
+GridPanel.setColumn(w2, 1);
+
+GridPanel.setRow(w3, 0);
+GridPanel.setColumn(w3, 2);
+
+GridPanel.setRow(w4, 0);
+GridPanel.setColumn(w4, 3);
+
+GridPanel.setRow(w5, 1);
+GridPanel.setColumn(w5, 0);
+GridPanel.setRowSpan(w5, 2);
+GridPanel.setColumnSpan(w5, 3);
+
+
+// var gs = new GridStackContainer(options);
+// attachWidget(gs, document.getElementById("main"));
+
+
+var panel = new GridPanel();
+
+panel.children = [w1, w2, w3, w4, w5];
+
+attachWidget(panel, document.body);
+
+window.onresize = () => panel.update();
+
+// document.getElementById("newElement").onclick = function() {
+// 	var testWidget = new Widget();
+// 	testWidget.addChild(createTestSplit());
+// 	gs.addChild(testWidget);
+// };
 
 // document.getElementById("newElement").onclick = function() {
 // 	createRandomGridstack();
